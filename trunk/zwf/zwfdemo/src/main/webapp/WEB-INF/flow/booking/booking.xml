@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow id="bookHotel" 
+	onEntry='flowScope.put("booking", bookingService.createBooking(hotelId, currentUser.name));' 
+	xmlns="http://www.zkoss.org/2009/zwf"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2009/zwf http://www.zkoss.org/2009/zwf/zwf.xsd">
+	
+	<view-state id="enterBookingDetails">
+		<transition id="proceed" to="reviewBooking" />
+		<transition id="cancel" to="bookingCancelled" />
+	</view-state>
+	
+	<view-state id="reviewBooking">
+		<transition id="confirm" to="agreeBooking" />
+		<transition id="revise" to="enterBookingDetails" />
+		<transition id="cancel" to="bookingCancelled" />
+	</view-state>
+	
+	<action-state id="agreeBooking" test="agreement.isChecked()">
+		<transition id="yes" to="bookingConfirmed" />
+		<transition id="no" to="reviewBooking" onTransit='flashScope.put("errmsg", "You must check to confirm!")'/>
+	</action-state>
+	
+	<end-state id="bookingConfirmed" onExit="bookingService.commit(booking)" />
+	<end-state id="bookingCancelled" />
+	
+</flow>

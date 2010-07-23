@@ -1,0 +1,38 @@
+<zk>
+	<div id="bookingsSection">
+		<html><![CDATA[<h2>Current Hotel Bookings</h2>]]></html>
+		<label value="No Bookings Found" if="${empty bookings}"/>
+		<grid unless="${empty bookings}">
+			<columns height="51px">
+				<column label="Name"/>
+				<column label="Address"/>
+				<column >
+					<html><![CDATA[City,<br/>State]]></html>
+				</column> 
+				<column>
+					<html><![CDATA[Check in<br/>date]]></html>
+				</column>
+				<column>
+					<html><![CDATA[Check out<br/>date]]></html>
+				</column>
+				<column>
+					<html><![CDATA[Confirmation<br/>number]]></html>
+				</column>
+				<column label="Action"/>
+			</columns>
+			<rows>
+				<row forEach="${bookings}">
+					<label value="${each.hotel.name}"/>
+					<label value="${each.hotel.address}"/>
+					<span><label value="${each.hotel.city}"/>, <label value="${each.hotel.state}"/></span>
+					<label value="${each.checkinDate}"/>
+					<label value="${each.checkoutDate}"/>
+					<label value="${each.id}"/>
+					<toolbarbutton label="Cancel" self="@{action(cancelBooking)}">
+						<custom-attributes booking="${each}"/>
+					</toolbarbutton>
+				</row>
+			</rows>
+		</grid>
+	</div>
+</zk>

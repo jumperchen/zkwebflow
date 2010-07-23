@@ -1,0 +1,22 @@
+<zk xmlns="http://www.zkoss.org/2005/zul">
+<div>
+	<html><![CDATA[<h2>View Hotel</h2>]]></html>
+	<grid>
+		<columns>
+			<column width="200px"/>
+			<column/>
+		</columns>
+		<rows>
+			<row>Name:<label value="${hotel.name}"/></row>
+			<row>Address:<label value="${hotel.address}"/></row>
+			<row>City:<label value="${hotel.city}"/></row>
+			<row>State:<label value="${hotel.state}"/></row>
+			<row>Zip:<label value="${hotel.zip}"/></row>
+			<row>Country:<label value="${hotel.country}"/></row>
+			<row>Nightly rate::<label value="&#36;${hotel.price}"/></row>
+		</rows>
+	</grid>
+	<button id="book" self="@{action(book)}" label="Book Hotel"/>
+	<button id="cancel" self="@{action(cancel)}" label="Back to Search"/>
+</div>
+</zk>

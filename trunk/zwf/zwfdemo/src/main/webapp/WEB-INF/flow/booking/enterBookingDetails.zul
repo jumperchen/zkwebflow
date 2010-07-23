@@ -1,0 +1,53 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./bookdiv"?>
+<?xel-method prefix="c" name="timezone" class="java.util.TimeZone" signature="java.util.TimeZone getTimeZone(java.lang.String)"?>    
+<zk xmlns="http://www.zkoss.org/2005/zul">
+<div id="bookdiv"> 
+	<html><![CDATA[<h2>Book Hotel</h2>]]></html>
+	<grid>
+		<columns>
+			<column width="200px"/>
+			<column/>
+		</columns>
+		<rows>
+			<row>Name:<label value="${booking.hotel.name}"/></row>
+			<row>Address:<label value="${booking.hotel.address}"/></row>
+			<row>City, State:<label value="${booking.hotel.city}, ${booking.hotel.state}"/></row>
+			<row>Zip:<label value="${booking.hotel.zip}"/></row>
+			<row>Country:<label value="${booking.hotel.country}"/></row>
+			<row>Nightly rate::<label value="&#36;${booking.hotel.price}"/></row>
+			<row>Check In Date:<datebox id="checkinDate" value="@{booking.checkinDate,save-when='proceed.onClick'}" constraint="no empty" format="yyyy-MM-dd" timeZone="${c:timezone('EST')}"/></row>
+			<row>Check Out Date:<datebox id="checkoutDate" value="@{booking.checkoutDate,save-when='proceed.onClick'}" constraint="no empty" format="yyyy-MM-dd" timeZone="${c:timezone('EST')}"/></row>
+			<row>Room Preference:
+				<listbox selectedIndex="@{booking.beds,save-when='proceed.onClick'}" mold="select" rows="1" >
+					<listitem forEach="${referenceData.bedOptions}" label="${each}"/>
+				</listbox>
+			</row>
+			<row>Smoking Preference:
+				<radiogroup selectedIndex="@{booking.smoking,save-when='proceed.onClick',converter='org.zkoss.zwfdemo.samples.booking.BoolToInt'}">
+					<radio label="Smoking"/>
+					<radio label="Non-Smoking"/>
+				</radiogroup>
+			</row>
+			<row>Credit Card #:
+				<textbox value="@{booking.creditCard,save-when='proceed.onClick'}" constraint="no empty,/[0-9]{16}/: A 16-digit credit card number is required."/>
+			</row>
+			<row>Credit Card Name:
+				<textbox id="creditCardName" value="@{booking.creditCardName,save-when='proceed.onClick'}" constraint="no empty"/>
+			</row>
+			<row>Expiration Date:
+				<hbox>
+					<listbox selectedItem="@{booking.creditCardExpiryMonth,save-when='proceed.onClick'}" mold="select" rows="1">
+						<listitem forEach="${referenceData.creditCardExpMonths}" label="${each}" value="${c:int(forEachStatus.index + 1)}"/>
+					</listbox>
+					<listbox selectedItem="@{booking.creditCardExpiryYear,save-when='proceed.onClick'}" mold="select" rows="1">
+						<listitem forEach="${referenceData.creditCardExpYears}" label="${each}" value="${c:int(each)}"/> 
+					</listbox>
+				</hbox>
+			</row>
+			
+		</rows>
+	</grid>
+	<button id="proceed" label="proceed" self="@{action(proceed)}"/>&#160;
+	<button label="Cancel" self="@{action(cancel)}"/>
+</div>
+</zk>

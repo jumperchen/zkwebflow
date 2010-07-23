@@ -1,0 +1,27 @@
+<?xel-method prefix="c" name="format" class="org.zkoss.zwfdemo2.samples.booking.DateFormater" signature="java.lang.String format(java.util.Date, java.lang.String)"?>    
+<zk xmlns="http://www.zkoss.org/2005/zul">
+<div>
+	<html><![CDATA[<h1>Confirm Hotel Booking</h1>]]></html>
+	<grid>
+		<columns>
+			<column width="200px"/>
+			<column/>
+		</columns>
+		<rows>
+			<row>Name:<label value='${booking.hotel.name}'/></row>
+			<row>Address:<label value='${booking.hotel.address}'/></row>
+			<row>City, State: <span>${booking.hotel.city}, ${booking.hotel.state}</span></row>
+			<row>Zip:<label value='${booking.hotel.zip}'/></row>
+			<row>Country:<label value='${booking.hotel.country}'/></row>
+			<row>Total payment:<label value="&#36;${booking.total}"/></row>
+			<row>Check In Date:<label value='${c:format(booking.checkinDate,"yyyy-MM-dd")}' /></row>
+			<row>Check Out Date:<label value='${c:format(booking.checkoutDate,"yyyy-MM-dd")}'/></row>
+			<row>Credit Card #:<label value='${booking.creditCard}'/></row>
+			<row spans="2"><span><checkbox id="agreement" label="I have read and agree the Agreement." /><label style="color:red" id="error" value='${errmsg}'/></span></row>
+		</rows>
+	</grid> 
+	<button label="Confirm" self="@{action(confirm)}"/>&#160;
+ 	<button label="Revise" self="@{action(revise)}"/>&#160;
+ 	<button label="Cancel" self="@{action(cancel)}"/>
+</div>
+</zk>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow id="main" onEntry='flowScope.put("searchCriteria", new org.zkoss.zwfdemo.samples.booking.SearchCriteria())' 
+    xmlns="http://www.zkoss.org/2009/zwf"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2009/zwf http://www.zkoss.org/2009/zwf/zwf.xsd">
+	<view-state id="enterSearchCriteria" onEntry='stateScope.put("bookings", bookingService.findBookings(currentUser.name))' 
+		uri="enterSearchCriteria.zul, bookingSection.zul">
+		<transition id="search" to="reviewHotels" >
+			<attribute name="onTransit">
+				searchCriteria.searchString = searchString.value; 
+				searchCriteria.pageSize = pageSize.getSelectedItem().getValue(); 
+				searchCriteria.resetPage();
+			</attribute>
+		</transition>
+		<transition id="cancelBooking" onTransit='bookingService.cancelBooking(componentScope.get("booking"));'/>
+	</view-state>
+	
+	<view-state id="reviewHotels">
+		<attribute name="onEntry">
+			stateScope.put("hotels", bookingService.findHotels(searchCriteria)); 
+			stateScope.put("hotelsCount", bookingService.findHotelsCount(searchCriteria));
+		</attribute>
+        <transition id="sort" onTransit='searchCriteria.sortBy = componentScope.get("sortBy"))' />
+		<transition id="paging" onTransit='searchCriteria.page = paging.getActivePage()' /> 
+		<transition id="select" to="reviewHotel" onTransit='flowScope.put("hotel", componentScope.get("hotel"))' />
+		<transition id="changeSearch" to="changeSearchCriteria" />
+	</view-state>
+	
+	<view-state id="reviewHotel">
+		<transition id="book" to="bookHotel" />
+		<transition id="cancel" to="enterSearchCriteria" />
+	</view-state>
+
+	<subflow-state id="bookHotel" subflow="../booking/booking.xml" onEntry='flowScope.put("hotelId", hotel.id)'>
+		<transition id="bookingConfirmed" to="finish" />
+		<transition id="bookingCancelled" to="enterSearchCriteria" />
+	</subflow-state>
+			
+	<view-state id="changeSearchCriteria" uri="enterSearchCriteria.zul" popup="~./zwf/popupTemplate.zul" >
+		<transition id="search" to="reviewHotels" bookmark="no">
+			<attribute name="onTransit">
+				searchCriteria.searchString = searchString.value; 
+				searchCriteria.pageSize = pageSize.getSelectedItem().getValue(); 
+				searchCriteria.resetPage();
+			</attribute>
+		</transition>
+	</view-state>
+	
+	<end-state id="finish" />
+</flow>

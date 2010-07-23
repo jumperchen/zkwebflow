@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns="http://www.zkoss.org/2009/zwf"
+	targetNamespace="http://www.zkoss.org/2009/zwf" 
+	elementFormDefault="qualified">
+    <!--
+    SIMPLETYPE
+    -->
+	<xs:simpleType name="booleanType">
+		<xs:union>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="yes" />
+					<xs:enumeration value="no" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType>
+				<xs:restriction base="xs:string" />
+			</xs:simpleType>
+		</xs:union>
+	</xs:simpleType>
+	
+	<xs:simpleType name="zslangAttrType">
+		<xs:union>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Java" />
+					<xs:enumeration value="JavaScript" />
+					<xs:enumeration value="Groovy" />
+					<xs:enumeration value="Ruby" />
+					<xs:enumeration value="Python" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType>
+				<xs:restriction base="xs:string" />
+			</xs:simpleType>
+		</xs:union>
+	</xs:simpleType>
+    
+	<!--
+	ATTRIBUTEGROUP 
+	 -->
+	<xs:attributeGroup name="baseAttrGroup">
+		<xs:attribute name="id" type="xs:string" use="required" />
+		<xs:attribute name="onEntry" type="xs:string" use="optional" />
+		<xs:attribute name="onExit" type="xs:string" use="optional" />
+	</xs:attributeGroup>
+	 
+	<!--
+	ELEMENTGROUP
+	 -->
+	<xs:group name="stateGroup">
+		<xs:choice>
+			<xs:element ref="attribute" />
+			<xs:element ref="transition" />
+		</xs:choice>
+	</xs:group>
+	 	 
+	<!-- 
+	ELEMENT
+	-->
+    <!-- attribute -->
+	<xs:element name="attribute" type="attributeType" />
+	<xs:complexType name="attributeType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="name" type="xs:string" use="required" />
+				<xs:attribute name="trim" type="booleanType" use="optional" />
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+    <!-- zscript -->
+	<xs:element name="zscript" type="zscriptType" />
+	<xs:complexType name="zscriptType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="src" type="xs:string" use="optional" />
+				<xs:attribute name="language" type="zslangAttrType" use="optional" />
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	
+	<!-- flow -->
+	<xs:element name="flow" type="flowType" />
+	<xs:complexType name="flowType">
+		<xs:choice minOccurs="0" maxOccurs="unbounded" >
+			<xs:element ref="zscript" />
+			<xs:element ref="attribute" />
+			<xs:element ref="view-state" />
+			<xs:element ref="end-state" />
+			<xs:element ref="subflow-state" />
+			<xs:element ref="action-state" />
+		</xs:choice>
+		<xs:attributeGroup ref="baseAttrGroup" />
+		<xs:attribute name="onViewStateChange" use="optional" />
+		<xs:attribute name="onSubflow" use="optional" />
+		<xs:attribute name="apply" type="xs:string" use="optional" />
+	</xs:complexType>
+	
+	<!-- view-state -->
+	<xs:element name="view-state" type="viewStateType" />
+	<xs:complexType name="viewStateType">
+		<xs:group ref="stateGroup" minOccurs="0" maxOccurs="unbounded" />
+		<xs:attributeGroup ref="baseAttrGroup" />
+		<xs:attribute name="uri" type="xs:string" use="optional" />
+		<xs:attribute name="popup" type="booleanType" use="optional" />
+	</xs:complexType>
+	
+	<!-- subflow-state -->
+	<xs:element name="subflow-state" type="subflowStateType" />
+	<xs:complexType name="subflowStateType">
+		<xs:group ref="stateGroup" minOccurs="0" maxOccurs="unbounded" />
+		<xs:attributeGroup ref="baseAttrGroup" />
+		<xs:attribute name="subflow" type="xs:string" use="required" />
+	</xs:complexType>
+	
+	<!-- action-state -->
+	<xs:element name="action-state" type="actionStateType" />
+	<xs:complexType name="actionStateType">
+		<xs:group ref="stateGroup" minOccurs="0" maxOccurs="unbounded" />
+		<xs:attributeGroup ref="baseAttrGroup" />
+		<xs:attribute name="test" type="xs:string" use="required" />
+	</xs:complexType>
+	
+	<!-- end-state -->
+	<xs:element name="end-state" type="endStateType" />
+	<xs:complexType name="endStateType">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element ref="attribute" />
+		</xs:choice>
+		<xs:attributeGroup ref="baseAttrGroup" />
+	</xs:complexType>
+	
+	<!-- transition -->
+	<xs:element name="transition" type="transitionType" />
+	<xs:complexType name="transitionType">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element ref="attribute" />
+		</xs:choice>
+		<xs:attribute name="id" type="xs:string" use="required" />
+		<xs:attribute name="to" type="xs:string" use="optional" />
+		<xs:attribute name="bookmark" type="booleanType" use="optional" />
+		<xs:attribute name="onTransit" type="xs:string" use="optional" />
+	</xs:complexType>
+</xs:schema>

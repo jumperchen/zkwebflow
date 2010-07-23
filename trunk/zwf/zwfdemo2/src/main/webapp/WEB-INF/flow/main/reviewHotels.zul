@@ -1,0 +1,31 @@
+<?xel-method prefix="c" name="len"  class="org.zkoss.xel.fn.CommonFns" signature="int length(java.lang.Object o)"?>    
+<zk xmlns="http://www.zkoss.org/2005/zul">
+	<div>
+		<html><![CDATA[<h2>Hotel Results</h2>]]></html>
+		<button label="Change Search" self="@{action(changeSearch)}"/>
+		<div>
+			<label value="No Hotels Found" if="${empty hotels}"/>
+			<grid unless="${empty hotels}">
+				<columns height="27px">
+					<column label="Name"/>
+					<column label="Address"/>
+					<column label="City, State"/>
+					<column label="Zip"/>
+					<column label="Action"/>
+				</columns>
+				<rows>
+					<row forEach="${hotels}" value="${each}">
+						<label value="${each.name}"/>
+						<label value="${each.address}"/>
+						<label value="${each.city}, ${each.state}, ${each.country}"/>
+						<label value="${each.zip}"/>
+						<toolbarbutton label="View Hotel" self="@{action(select)}">
+							<custom-attributes hotel="${each}"/>
+						</toolbarbutton>
+					</row>
+				</rows>
+			</grid>
+			<paging id="paging" pageSize="${searchCriteria.pageSize}" totalSize="${hotelsCount}" activePage="${searchCriteria.page}" self="@{action(paging, when=onPaging)}"/>
+		</div>
+	</div>
+</zk>
