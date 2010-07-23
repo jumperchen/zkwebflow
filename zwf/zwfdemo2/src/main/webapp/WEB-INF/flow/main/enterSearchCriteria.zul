@@ -1,0 +1,27 @@
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<zk>
+	<div id="hotel search" onOK="" self="@{action(search,when=onOK)}">
+		<html><![CDATA[<h2>Search Hotels</h2>]]></html>
+		<grid>
+			<columns>
+				<column width="200px"/>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					Search String: 
+					<textbox id="searchString" value="${searchCriteria.searchString}" tooltiptext="Search hotels by name, address, city, or zip." />
+				</row>
+				<row>
+					Maximum Results:
+					<listbox id="pageSize" rows="1" mold="select">
+						<listitem forEach="${referenceData.pageSizeOptions}" value="${c:int(each)}" label="${each}" selected="${c:int(each) == searchCriteria.pageSize}"/>
+					</listbox>
+				</row>
+				<row spans="2" align="right">
+					<button id="findHotels" label="Find Hotels" onClick="" self="@{action(search)}"/>
+				</row>
+			</rows>
+		</grid>
+	</div>
+</zk>

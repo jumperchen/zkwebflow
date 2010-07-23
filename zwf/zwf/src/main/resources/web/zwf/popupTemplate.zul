@@ -1,0 +1,2 @@
+<window id="popupWin" title="&#160;" self="@{view(content)}" closable="true">
+</window>

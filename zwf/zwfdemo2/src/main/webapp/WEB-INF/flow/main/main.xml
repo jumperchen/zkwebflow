@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow id="main" apply="org.zkoss.zwfdemo2.MyFlowComposer"
+	xmlns="http://www.zkoss.org/2009/zwf"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2009/zwf http://www.zkoss.org/2009/zwf/zwf.xsd">
+
+	<view-state id="enterSearchCriteria" uri="enterSearchCriteria.zul, bookingSection.zul">
+		<transition id="search" to="reviewHotels" />
+		<transition id="cancelBooking" />
+	</view-state>
+	
+	<view-state id="reviewHotels">
+        <transition id="sort" />
+		<transition id="paging" /> 
+		<transition id="select" to="reviewHotel" />
+		<transition id="changeSearch" to="changeSearchCriteria" />
+	</view-state>
+	
+	<view-state id="reviewHotel">
+		<transition id="book" to="bookHotel" />
+		<transition id="cancel" to="enterSearchCriteria" />
+	</view-state>
+
+	<subflow-state id="bookHotel" subflow="../booking/booking.xml">
+		<transition id="bookingConfirmed" to="finish" />
+		<transition id="bookingCancelled" to="enterSearchCriteria" />
+	</subflow-state>
+			
+	<view-state id="changeSearchCriteria" uri="enterSearchCriteria.zul" popup="~./zwf/popupTemplate.zul" >
+		<transition id="search" to="reviewHotels" bookmark="no" />
+	</view-state>
+	
+	<end-state id="finish" />
+</flow>

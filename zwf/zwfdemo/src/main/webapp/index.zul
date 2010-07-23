@@ -1,0 +1,35 @@
+<?page title="ZK Web Flow Sample Application" contentType="text/html;charset=UTF-8"?>
+<?init class="org.zkoss.zwf.FlowHandler" arg0="/WEB-INF/flow/main/main.xml"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver" ?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+<zscript>
+<![CDATA[
+//@IMPORT
+import org.zkoss.zwfdemo.samples.booking.*;
+]]>
+<![CDATA[
+    //TODO, Take out following code when security is done
+	User keith = new User("Keith", null, "keith");
+	User currentUser = keith;
+]]>
+</zscript>
+<window width="800px" height="100%" style="margin: 0 auto;">
+<borderlayout>
+<north size="60px">
+	<borderlayout>
+		<center border="none" style="background-color:#B1CBD5"><html><![CDATA[<h2 style="color:#0C7A9A;margin-left:10px">ZK Hotel Booking Sample Application</h2>]]></html></center>
+		<east border="none" style="background-color:#B1CBD5"><toolbarbutton src="/img/zkpowered_s.png" href="http://www.zkoss.org"/></east>
+	</borderlayout>
+</north>
+<south style="background-color:#B1CBD5">
+<span style="font-size:small">Copyright © 2009 Potix Corporation. All rights reserved.</span>
+</south>
+<west>
+	<image src="/img/hotel.jpg" />
+</west>
+<center>
+	<div id="working" self="@{view(content)}"/> <!-- working view -->
+</center>
+</borderlayout>
+</window>
+</zk>
