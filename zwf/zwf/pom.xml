@@ -7,106 +7,27 @@
 		<version>1.0.0-RC2</version>
 	</parent>
 
+	<groupId>org.zkoss.zwf</groupId>
 	<artifactId>zwf</artifactId>
+	<version>1.0.0-RC2</version>
 	<packaging>jar</packaging>
 	<name>The ZK Web Flow Engine</name>
 	<url>http://www.zkoss.org/zwf</url>
-	<version>1.0.0-RC2</version>
 	
 	<dependencies>
-		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging</artifactId>
-			<version>${commons-logging.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-fileupload</groupId>
-			<artifactId>commons-fileupload</artifactId>
-			<version>${commons-fileupload.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-			<version>${commons-io.version}</version>
-		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
 			<version>${spring.version}</version>
 			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring</artifactId>
-			<version>${spring.version}</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.zkoss.zk</groupId>
-			<artifactId>zk</artifactId>
-			<version>${zk.version}</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.zkoss.zk</groupId>
-			<artifactId>zkplus</artifactId>
-			<version>${zk.version}</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.zkoss.zk</groupId>
-			<artifactId>zul</artifactId>
-			<version>${zk.version}</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.zkoss.zk</groupId>
-			<artifactId>zhtml</artifactId>
-			<version>${zk.version}</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.zkoss.common</groupId>
-			<artifactId>zcommon</artifactId>
-			<version>${zk.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.zkoss.zk</groupId>
-			<artifactId>zkex</artifactId>
-			<version>${zk.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.zkoss.zkforge.el</groupId>
-			<artifactId>zcommons-el</artifactId>
-			<version>${zkel.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>${hibernate.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>javax.transaction</groupId>
-					<artifactId>jta</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>commons-lang</groupId>
-			<artifactId>commons-lang</artifactId>
-			<version>${commons-lang.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.beanshell</groupId>
-			<artifactId>bsh</artifactId>
-			<version>${bsh.version}</version>
-			<scope>runtime</scope>
+			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>javax.portlet</groupId>
   			<artifactId>portlet-api</artifactId>
   			<version>${portlet-api.version}</version>
-		</dependency>
+  			<optional>true</optional>
+  		</dependency>
 	</dependencies>
 
 	<build>
